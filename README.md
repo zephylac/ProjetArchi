@@ -14,7 +14,7 @@ sudo pacman -S nodejs npm; ./install.sh
 `
 
 # API
- [Node-steam-client](https://github.com/DoctorMcKay/node-steam-client)
+ [Node-steam-client](https://github.com/DoctorMcKay/node-steam-client)  
  [Node-steam-user](https://github.com/DoctorMcKay/node-steam-user)
 
 # Framework
