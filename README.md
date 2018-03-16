@@ -19,3 +19,5 @@ sudo pacman -S nodejs npm; ./install.sh
 
 # Framework
  [Angular](https://angular.io/)
+
+[tuto vidéo Angular](https://www.grafikart.fr/formations/angularjs)
