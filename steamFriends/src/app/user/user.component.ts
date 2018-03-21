@@ -21,7 +21,11 @@ export class UserComponent implements OnInit {
 	};
 
 	constructor(private api : ApiService) {
-		this.api.getFriendList(this.user.steamId);
+		let a = this.api.getFriendList(this.user.steamId);
+		console.log(a);
+
+		a = this.api.getOwnedGames(this.user.steamId);
+		console.log(a);
 	}
 
 	ngOnInit() {
