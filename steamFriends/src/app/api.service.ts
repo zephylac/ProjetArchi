@@ -23,7 +23,7 @@ export class ApiService {
 
 	public getFriendList(user : number){
 		//let headers = new Headers({ 'Access-Control-Allow-Origin':'*','Access-Control-Allow-Methods':'GET, POST', 'Access-Control-Allow-Headers':'X-Requested-With,content-type','Access-Control-Allow-Credentials': true });
-		let url = this.apiUrl+`/ISteamUser/GetFriendList/v1/?key=${key}&format=json&steamid=`+user;
+		let url = this.apiUrl+`/ISteamUser/GetFriendList/v1/?key=${this.key}&format=json&steamid=`+user;
 
 		this.http
 		.get(url, this.httpOptions)
