@@ -1,3 +1,10 @@
-<p>
-  user works!
-</p>
+<h2>{{ user.name | uppercase }} Details</h2>
+<div><span>id: </span>{{user.steamId}}</div>
+<div>
+	<label>name:
+		<input [(ngModel)]="user.name" placeholder="name">
+	</label>
+
+	{{ user.data }} 
+
+</div>
