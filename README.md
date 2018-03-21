@@ -29,3 +29,8 @@ sudo pacman -S nodejs npm; ./install.sh
 
 Compte : v.debonne@neuf.fr
 mdp : 12345678
+
+# Compte Steam
+
+Compte : SteamFriends72
+mdp : l3informatique
