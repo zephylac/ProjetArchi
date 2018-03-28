@@ -1,9 +1,31 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-		<img id="logo" src="steamIcon.ico" alt="Steam Logo" />
-    SteamFriends
-  </h1>
+<section ng-controller="headerCtrl">
+	<div class="dropdown">
+	  <h1>
+			<img src="steamIcon.ico" class="img-fluid" alt="Responsive image">
+	    SteamFriends
+	  </h1>
+	</div>
+</section>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+      <h4>Rechercher un jeu<br>Liste des jeux</h4>
+    </div>
+    <div class="col-sm">
+			<form>
+			  <div class="form-group">
+			    <label for="exampleInputEmail1">ID steam</label>
+			    <input type="text" class="form-control" id="idSteam" placeholder="Entrer l'ID Steam">
+			  </div>
+			  <button type="button" class="btn btn-dark">Rechercher</button>
+			</form>
+    </div>
+    <div class="col-sm">
+      One of three columns
+    </div>
+  </div>
 </div>
 
 <app-user></app-user>

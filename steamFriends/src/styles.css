@@ -3,12 +3,27 @@ body {
 	background-color: #005B96;
 }
 
-img#logo {
-	width: 1.4%;
-  height: auto;
-}
-
 h1 {
 	color: white;
-	font-size: 250%;
+	font-size: 200%;
+}
+
+.dropdown {
+	text-align: center;
+}
+
+.col-sm {
+	color: white;
+  text-align: center;
+  float: center;
+}
+div#leftmenu {
+  width: 20%;
+  float: left;
+}
+div#rightmenu {
+  width: 30%;
+  margin: 0 auto;
+  text-align: right;
+  float :right;
 }
