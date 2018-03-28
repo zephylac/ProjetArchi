@@ -1,4 +1,3 @@
 export class User {
-  steamId: number;
-  name : string;
+	constructor(public steamId: number, public name: string){}
 }

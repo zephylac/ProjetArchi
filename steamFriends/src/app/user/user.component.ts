@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges, Input , SimpleChanges} from '@angular/core';
 import { Http, Response, Headers } from '@angular/http';
 import { User } from '../user';
 import { ApiService } from '../api.service';
@@ -14,17 +14,19 @@ import 'rxjs/add/operator/map';
 	styleUrls: ['./user.component.css']
 })
 export class UserComponent implements OnInit {
-	private apiUrl = 'http://api.steampowered.com/';
 	private myData: any;
-	user: User = {
-	steamId: 76561198109028354,
-	name: 'zephylac'
-	};
+	disabled = true;
 
-	constructor(private api : ApiService) {
+	@Input()
+	user : User;
+
+	constructor(private api : ApiService) {}
+
+	private test(){
 		let subject = new Subject<any>();
 		let obs = subject.asObservable()
 
+		console.log(this.user.steamId);
 		this.myData = this.api.getuserstats(subject,this.user.steamId,730);
 
 		obs.subscribe((value) => {
@@ -34,5 +36,12 @@ export class UserComponent implements OnInit {
 	}
 
 	ngOnInit() {
+	}
+
+	ngOnChanges(changes : SimpleChanges){
+		if (changes.user != undefined){
+			this.disabled = false;
+			//this.showProfile();
+		}
 	}
 }
