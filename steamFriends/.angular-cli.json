@@ -9,7 +9,7 @@
       "outDir": "dist",
       "assets": [
         "assets",
-        "favicon.ico"
+        "steamIcon.ico"
       ],
       "index": "index.html",
       "main": "main.ts",
