@@ -18,7 +18,11 @@
 					</div>
 				</div>
 				<button type="button" class="btn btn-success" (click)="test();">Test</button>
+				<button type="button" class="btn btn-success" (click)="getFriendList();">See all friends</button>
 			</div>
+		</div>
+		<div *ngIf="myData != undefined">
+			<pre> {{ myData | json }} </pre>
 		</div>
 	</div>
 </div>

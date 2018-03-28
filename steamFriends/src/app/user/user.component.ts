@@ -38,19 +38,35 @@ export class UserComponent implements OnInit {
 		});
 	}
 
+	private getFriendList(){
+		let subject = new Subject<any>();
+		let obs = subject.asObservable()
+
+		this.api.getFriendList(subject,this.user.steamId);
+
+		obs.subscribe((value) => {
+			this.myData = value.friendslist.friends;
+
+		});
+	}
+
 	private showProfile(){
 		let subject = new Subject<any>();
 		let obs = subject.asObservable()
 
+		//console.log(this.user);
 		this.api.getPlayerProfile(subject,this.user.steamId);
 
 		obs.subscribe((value) => {
-			console.log("Subscription got", value);
+			//console.log("Subscription got", value);
 			this.profile = value.response.players[0];
+			if(this.profile != undefined){
+				this.disabled = false;
+			}
 		});
-
-
 	}
+
+	priva
 
 
 	ngOnInit() {
@@ -59,11 +75,10 @@ export class UserComponent implements OnInit {
 	ngOnChanges(changes : SimpleChanges){
 		if (changes.user != undefined){
 			if(changes.user.currentValue != undefined){
-			console.log(changes);
-			this.disabled = false;
-			this.showProfile();
+				this.profile = undefined;
+				this.disabled = true;
+				this.showProfile();
 			}
-
 		}
 	}
 }
