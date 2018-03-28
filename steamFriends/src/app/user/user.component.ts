@@ -3,6 +3,8 @@ import { Http, Response, Headers } from '@angular/http';
 import { User } from '../user';
 import { ApiService } from '../api.service';
 import { Observable } from 'rxjs/Observable';
+import {HttpResponse } from '@angular/common/http';
+import { Subject } from "rxjs/Subject";
 
 import 'rxjs/add/operator/map';
 
@@ -20,20 +22,15 @@ export class UserComponent implements OnInit {
 	};
 
 	constructor(private api : ApiService) {
-		let a = this.api.getuserstats(this.user.steamId,730);
-		//a.subscribe(resp => console.log({ ... resp.body}))
-		a.subscribe(
-        (res : any) => {
-           this.myData = res.body;
-					 console.log("ok");
-					 console.log(this.myData);
-					 console.log("ok2");
-        },
-        error => {
-          alert("ERROR");
-        }
-    );
+		let subject = new Subject<any>();
+		let obs = subject.asObservable()
 
+		this.myData = this.api.getuserstats(subject,this.user.steamId,730);
+
+		obs.subscribe((value) => {
+			console.log("Subscription got", value);
+			this.myData = value;
+		});
 	}
 
 	ngOnInit() {
