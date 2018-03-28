@@ -1,1 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+	background-color: #005B96;
+}
+
+img#logo {
+	width: 1.4%;
+  height: auto;
+}
+
+h1 {
+	color: white;
+	font-size: 250%;
+}
