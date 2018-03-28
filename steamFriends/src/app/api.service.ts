@@ -28,5 +28,17 @@ export class ApiService {
 			}
 		);
 	};
-	
+
+	public getPlayerProfile(obs : Subject<any>,user : number){
+		this.http.get(`http://localhost:3000/getplayersummary/?${user}`,{ observe: 'response' })
+		.subscribe(
+			(res : any) => {
+				obs.next(res.body);
+			},
+			error => {
+				alert("Error API not working");
+				obs.next(null);
+			}
+		);
+	};
 }

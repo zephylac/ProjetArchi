@@ -10,7 +10,7 @@ import { User }    from '../user';
 export class UserFormComponent {
 
 	model = 0;
-	@Output() user = new User(1,'test');
+	@Output() user;
 
 	submitted = false;
 

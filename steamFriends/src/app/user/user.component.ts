@@ -15,19 +15,22 @@ import 'rxjs/add/operator/map';
 })
 export class UserComponent implements OnInit {
 	private myData: any;
-	disabled = true;
+	private profile : any;
+	private disabled :boolean = true;
 
 	@Input()
 	user : User;
 
-	constructor(private api : ApiService) {}
+	constructor(private api : ApiService) {
+		this.disabled = true;
+	}
 
 	private test(){
 		let subject = new Subject<any>();
 		let obs = subject.asObservable()
 
 		console.log(this.user.steamId);
-		this.myData = this.api.getuserstats(subject,this.user.steamId,730);
+		this.api.getuserstats(subject,this.user.steamId,730);
 
 		obs.subscribe((value) => {
 			console.log("Subscription got", value);
@@ -35,13 +38,32 @@ export class UserComponent implements OnInit {
 		});
 	}
 
+	private showProfile(){
+		let subject = new Subject<any>();
+		let obs = subject.asObservable()
+
+		this.api.getPlayerProfile(subject,this.user.steamId);
+
+		obs.subscribe((value) => {
+			console.log("Subscription got", value);
+			this.profile = value.response.players[0];
+		});
+
+
+	}
+
+
 	ngOnInit() {
 	}
 
 	ngOnChanges(changes : SimpleChanges){
 		if (changes.user != undefined){
+			if(changes.user.currentValue != undefined){
+			console.log(changes);
 			this.disabled = false;
-			//this.showProfile();
+			this.showProfile();
+			}
+
 		}
 	}
 }
