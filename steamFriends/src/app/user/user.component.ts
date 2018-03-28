@@ -13,19 +13,27 @@ import 'rxjs/add/operator/map';
 })
 export class UserComponent implements OnInit {
 	private apiUrl = 'http://api.steampowered.com/';
-	data : any = {};
-
+	private myData: any;
 	user: User = {
 	steamId: 76561198109028354,
 	name: 'zephylac'
 	};
 
 	constructor(private api : ApiService) {
-		let a = this.api.getFriendList(this.user.steamId);
-		console.log(a);
+		let a = this.api.getuserstats(this.user.steamId,730);
+		//a.subscribe(resp => console.log({ ... resp.body}))
+		a.subscribe(
+        (res : any) => {
+           this.myData = res.body;
+					 console.log("ok");
+					 console.log(this.myData);
+					 console.log("ok2");
+        },
+        error => {
+          alert("ERROR");
+        }
+    );
 
-		a = this.api.getOwnedGames(this.user.steamId);
-		console.log(a);
 	}
 
 	ngOnInit() {

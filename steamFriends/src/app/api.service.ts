@@ -12,28 +12,11 @@ export class ApiService {
 
 	private apiUrl = 'http://api.steampowered.com/';
 	private key = '';
-	private httpOptions = {
-		headers: new HttpHeaders({'Access-Control-Allow-Origin': 'http://localhost:4200','Content-Type': 'application/json'})
-	};
+
 
 	constructor(private http : HttpClient){}
 
-	public getFriendList(user : number){
-		let url = this.apiUrl+`/ISteamUser/GetFriendList/v0001/?key=${this.key}&steamid=${user}&format=json`;
-		return this.http
-		.get(url,{ observe: 'response' })
-		.subscribe(resp => {
-			console.log({ ... resp.body });
-		});;
-	}
-
-	public getOwnedGames(user : number){
-		let url = this.apiUrl+`IPlayerService/GetOwnedGames/v0001/?key=${this.key}&steamid=${user}&format=json`;
-		return this.http
-		.get(url,{ observe: 'response' })
-		.subscribe(resp => {
-			console.log({ ... resp.body });
-		});;
-	}
-
+	public getuserstats(user : number, game : number){
+		return this.http.get(`http://localhost:3000/getuserstats/?${game}=${user}`,{ observe: 'response' });
+	};
 }
