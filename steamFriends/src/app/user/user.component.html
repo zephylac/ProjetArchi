@@ -3,9 +3,22 @@
 	<br />
 
 	<div *ngIf="!disabled">
-		<img src="{{ profile.avatar }}" />
-		<span>{{profile.personaname}}</span>
-		<button type="button" class="btn btn-success" (click)="test();">Test</button>
-
+		<div class="panel panel-success">
+			<div class="panel-heading">
+				<h3 class="panel-title">{{profile.personaname}}</h3>
+			</div>
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-sm-auto col-md-auto">
+						<img class="img-responsive rounded" src="{{ profile.avatarmedium }}" />
+					</div>
+					<div class="col-sm">
+						<span class="float-left">Date d'inscription : {{profile.timecreated * 1000 | date:'yyyy-MM-dd'}}</span><br />
+						<span class="float-left">Pays : </span><img class="img-responsive pull-left" src="https://steamcommunity-a.akamaihd.net/public/images/countryflags/{{ profile.loccountrycode | lowercase }}.gif" alt="FR" />
+					</div>
+				</div>
+				<button type="button" class="btn btn-success" (click)="test();">Test</button>
+			</div>
+		</div>
 	</div>
 </div>
