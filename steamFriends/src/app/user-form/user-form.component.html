@@ -1,5 +1,4 @@
 <div class="container">
-	<h1>Hero Form</h1>
 	<form (ngSubmit)="onSubmit()" #userForm="ngForm">
 		<div class="form-group">
 			<label for="id">Steam ID</label>
@@ -14,6 +13,15 @@
 		</div>
 		<button type="submit" class="btn btn-success" (click)="newUser();" [disabled]="!userForm.form.valid">Submit</button>
 	</form>
-	<app-user [user]= "user"></app-user>
-
+	<div class="row">
+		<div class="col-sm">
+			<h4>Rechercher un jeu<br>Liste des jeux</h4>
+		</div>
+		<div class="col-sm">
+			<app-user [user]= "user"></app-user>
+		</div>
+		<div class="col-sm">
+			One of three columns
+		</div>
+	</div>
 </div>
