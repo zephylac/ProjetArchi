@@ -16,6 +16,7 @@ import 'rxjs/add/operator/map';
 export class UserComponent implements OnInit {
 	private myData: any;
 	private profile : any;
+	private games : any;
 	private disabled :boolean = true;
 
 	@Input()
@@ -51,23 +52,33 @@ export class UserComponent implements OnInit {
 	}
 
 	private showProfile(){
-		let subject = new Subject<any>();
-		let obs = subject.asObservable()
+		let subjectProfile = new Subject<any>();
+		let obsProfile= subjectProfile.asObservable();
 
 		//console.log(this.user);
-		this.api.getPlayerProfile(subject,this.user.steamId);
+		this.api.getPlayerProfile(subjectProfile,this.user.steamId);
 
-		obs.subscribe((value) => {
+		obsProfile.subscribe((value) => {
 			//console.log("Subscription got", value);
 			this.profile = value.response.players[0];
 			if(this.profile != undefined){
 				this.disabled = false;
 			}
 		});
+
+		let subjectGames = new Subject<any>();
+		let obsGames = subjectGames.asObservable();
+
+		this.api.getOwnedGames(subjectGames,this.user.steamId);
+
+		obsGames.subscribe((value) => {
+			//console.log("Subscription got", value);
+			this.games = value.response;
+			if(this.profile != undefined){
+				this.disabled = false;
+			}
+		});
 	}
-
-	priva
-
 
 	ngOnInit() {
 	}

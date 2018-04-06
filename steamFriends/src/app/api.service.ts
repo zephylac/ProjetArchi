@@ -54,4 +54,17 @@ export class ApiService {
 			}
 		);
 	};
+
+	public getOwnedGames(obs : Subject<any>,user : number){
+		this.http.get(`http://localhost:3000/getownedgames/?${user}`,{ observe: 'response' })
+		.subscribe(
+			(res : any) => {
+				obs.next(res.body);
+			},
+			error => {
+				alert("Error API not working");
+				obs.next(null);
+			}
+		);
+	};
 }

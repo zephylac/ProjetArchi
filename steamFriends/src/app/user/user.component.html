@@ -15,6 +15,7 @@
 					<div class="col-sm">
 						<span class="float-left">Date d'inscription : {{profile.timecreated * 1000 | date:'yyyy-MM-dd'}}</span><br />
 						<span class="float-left">Pays : </span><img class="img-responsive pull-left" src="https://steamcommunity-a.akamaihd.net/public/images/countryflags/{{ profile.loccountrycode | lowercase }}.gif" alt="FR" />
+						<span class="float-left">Jeu : {{games.game_count}}</span><br />
 					</div>
 				</div>
 				<button type="button" class="btn btn-success" (click)="test();">Test</button>
