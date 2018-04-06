@@ -93,16 +93,4 @@ export class ApiService {
 			}
 		);
 	};
-
-	public getAppList(obs : Subject<any>){
-		this.http.get(`../assets/applist.json`,{ observe: 'response' })
-		.subscribe(
-			(res : any) => {
-				obs.next(res.body);
-			}
-		);
-	};
-
-
-
 }

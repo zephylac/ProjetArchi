@@ -119,7 +119,7 @@ app.get('/getownedgames', function(req, res) {
 	for (var p in req.query) {
 		qParams.push({'name':p, 'value':req.query[p]})
 	}
-var url = `http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${key}&steamid=${qParams[0].name}&format=json`;
+var url = `http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${key}&steamid=${qParams[0].name}&format=json&include_appinfo=1`;
 	request(url, function(err, response, body) {
 		if(!err && response.statusCode < 400) {
 			console.log(body);
