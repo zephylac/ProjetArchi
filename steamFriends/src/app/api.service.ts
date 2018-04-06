@@ -16,6 +16,19 @@ export class ApiService {
 
 	constructor(private http : HttpClient){}
 
+	public getName(obs : Subject<any>,user : number,index : number){
+		this.http.get(`http://localhost:3000/getplayersummary/?${user}`,{ observe: 'response' })
+		.subscribe(
+			(res : any) => {
+				obs.next({'res' :res.body.response.players[0].personaname, 'index' : index});
+			},
+			error => {
+				alert("Error API not working");
+				obs.next(null);
+			}
+		);
+		};
+
 	public getuserstats(obs : Subject<any>,user : number, game : number){
 		this.http.get(`http://localhost:3000/getuserstats/?${game}=${user}`,{ observe: 'response' })
 		.subscribe(
@@ -67,4 +80,29 @@ export class ApiService {
 			}
 		);
 	};
+
+	public getGameInfo(obs : Subject<any>,appid : number, index : number){
+		this.http.get(`http://localhost:3000/getschema/?${appid}`,{ observe: 'response' })
+		.subscribe(
+			(res : any) => {
+				obs.next({'res' : res.body, 'index' : index});
+			},
+			error => {
+				alert("Error API not working");
+				obs.next(null);
+			}
+		);
+	};
+
+	public getAppList(obs : Subject<any>){
+		this.http.get(`../assets/applist.json`,{ observe: 'response' })
+		.subscribe(
+			(res : any) => {
+				obs.next(res.body);
+			}
+		);
+	};
+
+
+
 }

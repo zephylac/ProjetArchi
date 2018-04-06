@@ -16,8 +16,11 @@ import 'rxjs/add/operator/map';
 export class UserComponent implements OnInit {
 	private myData: any;
 	private profile : any;
+	private friends : any;
+	private friendsName : any;
 	private games : any;
 	private disabled :boolean = true;
+	private appList : any;
 
 	@Input()
 	user : User;
@@ -46,10 +49,35 @@ export class UserComponent implements OnInit {
 		this.api.getFriendList(subject,this.user.steamId);
 
 		obs.subscribe((value) => {
-			this.myData = value.friendslist.friends;
+			this.friends = value.friendslist.friends;
 
+
+			for (var i = 0; i < this.friends.length; i++) {
+				let subjectProfile = new Subject<any>();
+				let obsProfile= subjectProfile.asObservable();
+
+				this.api.getName(subjectProfile,this.friends[i].steamid,i);
+
+				obsProfile.subscribe((value) => {
+					this.friends[value.index].name = value.res;
+				});
+			}
 		});
 	}
+
+	private getAppList(){
+		let subjectProfile = new Subject<any>();
+		let obsProfile= subjectProfile.asObservable();
+
+		//console.log(this.user);
+		this.api.getAppList(subjectProfile);
+
+		obsProfile.subscribe((value) => {
+			//console.log("Subscription got", value);
+			this.appList = value.app;
+		});
+	}
+
 
 	private showProfile(){
 		let subjectProfile = new Subject<any>();
@@ -74,13 +102,22 @@ export class UserComponent implements OnInit {
 		obsGames.subscribe((value) => {
 			//console.log("Subscription got", value);
 			this.games = value.response;
-			if(this.profile != undefined){
-				this.disabled = false;
-			}
+
+			// for (var i = 0; i < this.games.games.length; i++) {
+			// 	var isDone = false;
+			// 	for (var j = 0; j < this.appList.length && !isDone; j++) {
+			// 		if(this.games.games[i].appid == this.appList[j].appid){
+			// 			console.log("found" + this.appList[j].name );
+			// 			this.games.games[i].name = this.appList[j].name;
+			// 			isDone = true;
+			// 		}
+			// 	}
+			// }
 		});
 	}
 
 	ngOnInit() {
+		this.getAppList();
 	}
 
 	ngOnChanges(changes : SimpleChanges){
@@ -89,6 +126,7 @@ export class UserComponent implements OnInit {
 				this.profile = undefined;
 				this.disabled = true;
 				this.showProfile();
+
 			}
 		}
 	}

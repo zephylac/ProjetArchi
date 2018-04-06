@@ -13,15 +13,5 @@
 		</div>
 		<button type="submit" class="btn btn-success" (click)="newUser();" [disabled]="!userForm.form.valid">Submit</button>
 	</form>
-	<div class="row">
-		<div class="col-sm">
-			<h4>Rechercher un jeu<br>Liste des jeux</h4>
-		</div>
-		<div class="col-sm">
-			<app-user [user]= "user"></app-user>
-		</div>
-		<div class="col-sm">
-			One of three columns
-		</div>
-	</div>
+<app-user [user]= "user"></app-user>
 </div>
