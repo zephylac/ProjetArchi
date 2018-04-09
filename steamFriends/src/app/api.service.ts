@@ -13,11 +13,12 @@ import 'rxjs/add/operator/map';
 export class ApiService {
 
 	private apiUrl = 'http://api.steampowered.com/';
+	private adress = '163.172.161.181'
 
 	constructor(private http : HttpClient){}
 
 	public getName(obs : Subject<any>,user : number,index : number){
-		this.http.get(`http://localhost:3000/getplayersummary/?${user}`,{ observe: 'response' })
+		this.http.get(`http://${this.address}:3000/getplayersummary/?${user}`,{ observe: 'response' })
 		.subscribe(
 			(res : any) => {
 				obs.next({'res' :res.body.response.players[0], 'index' : index});
@@ -30,7 +31,7 @@ export class ApiService {
 		};
 
 	public getUserStats(obs : Subject<any>,user : number, game : number){
-		this.http.get(`http://localhost:3000/getuserstats/?${game}=${user}`,{ observe: 'response' })
+		this.http.get(`http://${this.address}:3000/getuserstats/?${game}=${user}`,{ observe: 'response' })
 		.subscribe(
 			(res : any) => {
 				obs.next(res.body);
@@ -43,7 +44,7 @@ export class ApiService {
 	};
 
 	public getPlayerProfile(obs : Subject<any>,user : number){
-		this.http.get(`http://localhost:3000/getplayersummary/?${user}`,{ observe: 'response' })
+		this.http.get(`http://${this.address}:3000/getplayersummary/?${user}`,{ observe: 'response' })
 		.subscribe(
 			(res : any) => {
 				obs.next(res.body);
@@ -56,7 +57,7 @@ export class ApiService {
 	};
 
 	public getFriendList(obs : Subject<any>,user : number){
-		this.http.get(`http://localhost:3000/getfriendlist/?${user}`,{ observe: 'response' })
+		this.http.get(`http://${this.address}:3000/getfriendlist/?${user}`,{ observe: 'response' })
 		.subscribe(
 			(res : any) => {
 				obs.next(res.body);
@@ -69,7 +70,7 @@ export class ApiService {
 	};
 
 	public getOwnedGames(obs : Subject<any>,user : number){
-		this.http.get(`http://localhost:3000/getownedgames/?${user}`,{ observe: 'response' })
+		this.http.get(`http://${this.address}:3000/getownedgames/?${user}`,{ observe: 'response' })
 		.subscribe(
 			(res : any) => {
 				obs.next(res.body);
@@ -82,7 +83,7 @@ export class ApiService {
 	};
 
 	public filterFriendGame(obs : Subject<any>,user : number, game : number, index : number){
-		this.http.get(`http://localhost:3000/filterfriendgame/?${game}=${user}`,{ observe: 'response' })
+		this.http.get(`http://${this.address}:3000/filterfriendgame/?${game}=${user}`,{ observe: 'response' })
 		.subscribe(
 			(res : any) => {
 				obs.next({'res' :res.body.response, 'index' : index});
@@ -95,7 +96,7 @@ export class ApiService {
 	};
 
 	public getGameInfo(obs : Subject<any>,appid : number, index : number){
-		this.http.get(`http://localhost:3000/getschema/?${appid}`,{ observe: 'response' })
+		this.http.get(`http://${this.address}:3000/getschema/?${appid}`,{ observe: 'response' })
 		.subscribe(
 			(res : any) => {
 				obs.next({'res' : res.body, 'index' : index});
