@@ -175,6 +175,7 @@ export class UserComponent implements OnInit {
 				this.profile = undefined;
 				this.disabled = true;
 				this.getFriendList();
+				this.showProfile();
 			}
 		}
 	}
