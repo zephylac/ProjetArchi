@@ -20,7 +20,7 @@ export class ApiService {
 		this.http.get(`http://localhost:3000/getplayersummary/?${user}`,{ observe: 'response' })
 		.subscribe(
 			(res : any) => {
-				obs.next({'res' :res.body.response.players[0].personaname, 'index' : index});
+				obs.next({'res' :res.body.response.players[0], 'index' : index});
 			},
 			error => {
 				alert("Error API not working");
@@ -29,7 +29,7 @@ export class ApiService {
 		);
 		};
 
-	public getuserstats(obs : Subject<any>,user : number, game : number){
+	public getUserStats(obs : Subject<any>,user : number, game : number){
 		this.http.get(`http://localhost:3000/getuserstats/?${game}=${user}`,{ observe: 'response' })
 		.subscribe(
 			(res : any) => {
@@ -73,6 +73,19 @@ export class ApiService {
 		.subscribe(
 			(res : any) => {
 				obs.next(res.body);
+			},
+			error => {
+				alert("Error API not working");
+				obs.next(null);
+			}
+		);
+	};
+
+	public filterFriendGame(obs : Subject<any>,user : number, game : number, index : number){
+		this.http.get(`http://localhost:3000/filterfriendgame/?${game}=${user}`,{ observe: 'response' })
+		.subscribe(
+			(res : any) => {
+				obs.next({'res' :res.body.response, 'index' : index});
 			},
 			error => {
 				alert("Error API not working");

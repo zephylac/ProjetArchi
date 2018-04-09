@@ -8,18 +8,25 @@ import { Subject } from "rxjs/Subject";
 
 import 'rxjs/add/operator/map';
 
+
+
 @Component({
 	selector: 'app-user',
 	templateUrl: './user.component.html',
 	styleUrls: ['./user.component.css']
 })
+
 export class UserComponent implements OnInit {
 	private myData: any;
 	private profile : any;
 	private friends : any;
-	private friendsName : any;
+	private compareSelf : any;
+	private compareOther : any;
 	private games : any;
+	private sortedGames : any ;
 	private disabled :boolean = true;
+	private filtered :boolean = false;
+	private compared :boolean = false;
 	private appList : any;
 
 	@Input()
@@ -34,7 +41,7 @@ export class UserComponent implements OnInit {
 		let obs = subject.asObservable()
 
 		console.log(this.user.steamId);
-		this.api.getuserstats(subject,this.user.steamId,730);
+		this.api.getUserStats(subject,this.user.steamId,730);
 
 		obs.subscribe((value) => {
 			console.log("Subscription got", value);
@@ -59,25 +66,53 @@ export class UserComponent implements OnInit {
 				this.api.getName(subjectProfile,this.friends[i].steamid,i);
 
 				obsProfile.subscribe((value) => {
-					this.friends[value.index].name = value.res;
+					this.friends[value.index].info = value.res;
 				});
 			}
 		});
 	}
 
-	private getAppList(){
+	private filterFriendGame(gameID : number){
 		let subjectProfile = new Subject<any>();
 		let obsProfile= subjectProfile.asObservable();
+		this.filtered = true;
+		this.compared = false;
 
-		//console.log(this.user);
-		this.api.getAppList(subjectProfile);
 
-		obsProfile.subscribe((value) => {
-			//console.log("Subscription got", value);
-			this.appList = value.app;
-		});
+		for (var i = 0; i < this.friends.length; i++) {
+			this.api.filterFriendGame(subjectProfile,this.friends[i].steamid,gameID,i);
+			obsProfile.subscribe((value) => {
+				this.friends[value.index].game = value.res;
+			});
+		}
 	}
 
+	private compareFriend(steamID : number, gameID : number){
+		let subject1 = new Subject<any>();
+		let obs1 = subject1.asObservable();
+
+		let subject2 = new Subject<any>();
+		let obs2 = subject2.asObservable();
+
+		this.compared = true;
+		this.filtered = false;
+
+		console.log(steamID);
+		console.log(gameID);
+
+
+		this.api.getUserStats(subject1,this.user.steamId,gameID);
+
+		this.api.getUserStats(subject2,steamID,gameID);
+
+		obs1.subscribe((value) => {
+			this.compareSelf = value;
+		});
+
+		obs2.subscribe((value) => {
+			this.compareOther = value;
+		});
+	}
 
 	private showProfile(){
 		let subjectProfile = new Subject<any>();
@@ -102,22 +137,36 @@ export class UserComponent implements OnInit {
 		obsGames.subscribe((value) => {
 			//console.log("Subscription got", value);
 			this.games = value.response;
+			this.sortedGames = this.filterByPlayTime();
 
-			// for (var i = 0; i < this.games.games.length; i++) {
-			// 	var isDone = false;
-			// 	for (var j = 0; j < this.appList.length && !isDone; j++) {
-			// 		if(this.games.games[i].appid == this.appList[j].appid){
-			// 			console.log("found" + this.appList[j].name );
-			// 			this.games.games[i].name = this.appList[j].name;
-			// 			isDone = true;
-			// 		}
-			// 	}
-			// }
 		});
 	}
 
+	private padTime(t : number) {
+		return t < 10 ? "0"+t : t;
+	}
+
+	private duration_for(snd : number) {
+		if (typeof snd !== "number" || snd < 0)
+			return "00:00:00";
+
+			var hours = Math.floor(snd / 60),
+			minutes = Math.floor((snd % 60) )
+
+			return this.padTime(hours) + " hours : " + this.padTime(minutes) + " mins";
+	}
+
+	private filterByPlayTime(){
+		var sortedArray = this.games.games;
+		console.log(sortedArray);
+		sortedArray.sort((a,b): any => b.playtime_forever - a.playtime_forever);
+		sortedArray.length = 10;
+
+		console.log(sortedArray);
+		return sortedArray;
+	}
+
 	ngOnInit() {
-		this.getAppList();
 	}
 
 	ngOnChanges(changes : SimpleChanges){
@@ -125,8 +174,7 @@ export class UserComponent implements OnInit {
 			if(changes.user.currentValue != undefined){
 				this.profile = undefined;
 				this.disabled = true;
-				this.showProfile();
-
+				this.getFriendList();
 			}
 		}
 	}
