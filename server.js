@@ -184,6 +184,22 @@ var url = `http://api.steampowered.com/ISteamUser/GetPlayerBans/v1/?key=${key}&s
 	});
 });
 
+app.get('/filterfriendgame', function(req, res) {
+	var qParams = [];
+	for (var p in req.query) {
+		qParams.push({'name':p, 'value':req.query[p]})
+	}
+var url = `http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${key}&steamid=${qParams[0].value}&appids_filter[0]=${qParams[0].name}&format=json&include_appinfo=1`;
+	request(url, function(err, response, body) {
+		if(!err && response.statusCode < 400) {
+			console.log(body);
+			res.send(body);
+		}
+	});
+});
+
+
+
 app.use(function(req,res){
   res.type('text/plain');
   res.status(404);
