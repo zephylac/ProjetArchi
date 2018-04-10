@@ -18,6 +18,7 @@ sudo pacman -S nodejs npm; ./install.sh
 
 # API
 
+[Valve Web Api](https://developer.valvesoftware.com/wiki/Steam_Web_API)
 
 
 # Framework
@@ -30,7 +31,19 @@ sudo pacman -S nodejs npm; ./install.sh
 Compte : v.debonne@neuf.fr
 mdp : 12345678
 
-# Compte Steam
+# Use  
 
-Compte : SteamFriends72
-mdp : l3informatique
+	id to test :  
+		* 76561198109028354  
+		* 76561198161125252  
+
+	## http  
+	Currently working  
+	[Website](163.172.161.181:4200)  
+	[RedoneApi](163.172.161.181:3000)  
+
+	## https  
+	Only half of it working (https redirection isn't working whereas it's https)  
+
+	[Website](archi.quantumfruit.xyz)  
+	[RedoneApi](api.quantumfruit.xyz)  
