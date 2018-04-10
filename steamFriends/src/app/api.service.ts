@@ -13,7 +13,7 @@ import 'rxjs/add/operator/map';
 export class ApiService {
 
 	private apiUrl = 'http://api.steampowered.com/';
-	private adress = '163.172.161.181'
+	private address = 'localhost'
 
 	constructor(private http : HttpClient){}
 
